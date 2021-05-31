@@ -12,8 +12,23 @@ class CalcController {
 
         this._displayCalc = "0";
         this._currentDate;
+        this.initialize();
 
         // o comando interno this referencia  atributos e métodos.
+    }
+
+    initialize() {
+
+        let displayCalcEl = document.querySelector("#display");
+        let dateEl = document.querySelector("#data");
+        let timeEl = document.querySelector("#hora");
+
+
+        displayCalcEl.innerHTML = "4567";
+        dateEl.innerHTML = "12/05/2018"
+        timeEl.innerHTML = "00:00"
+
+
     }
 
     get displayCalc() {
