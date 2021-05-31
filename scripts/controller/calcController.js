@@ -11,7 +11,7 @@ class CalcController {
         //dentro dos parenteses passamos os parametros, e dentro das chaves o que vai fazer
 
         this._displayCalc = "0";
-        this._dataAtual;
+        this._currentDate;
 
         // o comando interno this referencia  atributos e métodos.
     }
@@ -23,12 +23,12 @@ class CalcController {
         this._displayCalc = valor;
     }
 
-    get dataAtual() {
-        return this._dataAtual;
+    get currentDate() {
+        return this._currentDate;
     }
 
-    set dataAtual(valor) {
-        this.dataAtual = valor;
+    set currentDate(valor) {
+        this.currentDate = valor;
     }
 
 }
