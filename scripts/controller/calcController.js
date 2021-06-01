@@ -9,8 +9,10 @@ class CalcController {
     constructor() {
 
         //dentro dos parenteses passamos os parametros, e dentro das chaves o que vai fazer
-
-        this._displayCalc = "0";
+        this._locale = 'pt-br'
+        this._displayCalcEl = document.querySelector("#display");
+        this._dateEl = document.querySelector("#data");
+        this._timeEl = document.querySelector("#hora");
         this._currentDate;
         this.initialize();
 
@@ -18,32 +20,57 @@ class CalcController {
     }
 
     initialize() {
+        this.setDisplayDateTime();
 
-        let displayCalcEl = document.querySelector("#display");
-        let dateEl = document.querySelector("#data");
-        let timeEl = document.querySelector("#hora");
+        setInterval(() => {
 
-
-        displayCalcEl.innerHTML = "4567";
-        dateEl.innerHTML = "12/05/2018"
-        timeEl.innerHTML = "00:00"
+            this.setDisplayDateTime();
 
 
+        }, 1000);
+    }
+
+    setDisplayDateTime() {
+
+        this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+        this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+
+    }
+
+    get displayTime() {
+        return this._timeEl.innerHTML;
+    }
+
+    set displayTime(value) {
+        return this._timeEl.innerHTML = value;
+    }
+
+    get displayDate() {
+        return this._dateEl.innerHTML;
+    }
+
+
+    set displayDate(value) {
+        return this._dateEl.innerHTML = value;
     }
 
     get displayCalc() {
-        return this._displayCalc;
+        return this._displayCalcEl.innerHTML;
     }
-    set displayCalc(valor) {
-        this._displayCalc = valor;
+    set displayCalc(value) {
+        this._displayCalcEl.innerHTML = value;
     }
 
     get currentDate() {
-        return this._currentDate;
+        return new Date();
     }
 
-    set currentDate(valor) {
-        this.currentDate = valor;
+    set currentDate(value) {
+        this.currentDate = value;
     }
 
 }
