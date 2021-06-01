@@ -2,7 +2,6 @@ class CalcController {
 
     // nomes de classe sempre inciciam em letra maiúscula
     // o que importa é o que tem dentro da classe, classe vazia nao serve de nada.
-
     // dentro da classe sempre encontramos variáveis e funções
 
 
@@ -15,6 +14,7 @@ class CalcController {
         this._timeEl = document.querySelector("#hora");
         this._currentDate;
         this.initialize();
+        this.initButtonsEvents();
 
         // o comando interno this referencia  atributos e métodos.
     }
@@ -33,6 +33,14 @@ class CalcController {
     initButtonsEvents() {
 
         let buttons = document.querySelectorAll("#buttons > g, #parts > g");
+
+        buttons.forEach((btn, index) => {
+
+            btn.addEventListener("click", e => {
+                console.log(btn.className.baseVal.replace("btn-", ""));
+            })
+
+        });
     }
 
     setDisplayDateTime() {
