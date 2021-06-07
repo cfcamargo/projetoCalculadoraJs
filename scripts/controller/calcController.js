@@ -1,15 +1,9 @@
 class CalcController {
 
-    // nomes de classe sempre inciciam em letra maiúscula
-    // o que importa é o que tem dentro da classe, classe vazia nao serve de nada.
-    // dentro da classe sempre encontramos variáveis e funções
-
-
     constructor() {
 
-        //dentro dos parenteses passamos os parametros, e dentro das chaves o que vai fazer
         this._operation = [];
-        this._locale = 'pt-br';
+        this._locale = 'pt-BR';
         this._displayCalcEl = document.querySelector("#display");
         this._dateEl = document.querySelector("#data");
         this._timeEl = document.querySelector("#hora");
@@ -17,46 +11,96 @@ class CalcController {
         this.initialize();
         this.initButtonsEvents();
 
-        // o comando interno this referencia  atributos e métodos.
     }
 
     initialize() {
-        this.setDisplayDateTime();
+
+        this.setDisplayDateTime()
 
         setInterval(() => {
 
             this.setDisplayDateTime();
 
-
         }, 1000);
+
     }
 
     addEventListenerAll(element, events, fn) {
 
-        //criando uma forma de selecionar vaior eventos usando um separador de array(split)
-
         events.split(' ').forEach(event => {
+
             element.addEventListener(event, fn, false);
-        });
+
+        })
 
     }
 
     clearAll() {
+
         this._operation = [];
+
     }
 
-
     clearEntry() {
+
         this._operation.pop();
+
+    }
+
+    getLastOperation() {
+
+        return this._operation[this._operation.length - 1];
+
+    }
+
+    setLastOperation(value) {
+
+        this._operation[this._operation.length - 1] = value;
+
+    }
+
+    isOperator(value) {
+
+        return (['+', '-', '*', '%', '/'].indexOf(value) > -1);
+
     }
 
     addOperation(value) {
-        this._operation.push(value);
+
+        console.log('A', isNaN(this.getLastOperation()));
+
+        if (isNaN(this.getLastOperation())) {
+
+            if (this.isOperator(value)) {
+
+                this.setLastOperation(value);
+
+            } else if (isNaN(value)) {
+
+                console.log(value);
+
+            } else {
+
+                this._operation.push(value);
+
+            }
+
+        } else {
+
+            let newValue = this.getLastOperation().toString() + value.toString();
+
+            this.setLastOperation(parseInt(newValue));
+
+        }
+
         console.log(this._operation);
+
     }
 
     setError() {
-        this.displayCalc = 'Error';
+
+        this.displayCalc = "Error";
+
     }
 
     execBtn(value) {
@@ -72,27 +116,31 @@ class CalcController {
                 break;
 
             case 'soma':
-
+                this.addOperation('+');
                 break;
 
             case 'subtracao':
-
+                this.addOperation('-');
                 break;
 
             case 'divisao':
-
+                this.addOperation('/');
                 break;
 
             case 'multiplicacao':
-
+                this.addOperation('*');
                 break;
 
             case 'porcento':
-
+                this.addOperation('%');
                 break;
 
             case 'igual':
 
+                break;
+
+            case 'ponto':
+                this.addOperation('.');
                 break;
 
             case '0':
@@ -108,13 +156,11 @@ class CalcController {
                 this.addOperation(parseInt(value));
                 break;
 
-
             default:
                 this.setError();
                 break;
 
         }
-
 
     }
 
@@ -129,20 +175,24 @@ class CalcController {
                 let textBtn = btn.className.baseVal.replace("btn-", "");
 
                 this.execBtn(textBtn);
-            });
 
-            this.addEventListenerAll(btn, "mouseover mouseup mousedown", e => {
-                btn.style.cursor = "pointer"
             })
 
-        });
+            this.addEventListenerAll(btn, "mouseover mouseup mousedown", e => {
+
+                btn.style.cursor = "pointer";
+
+            })
+
+        })
+
     }
 
     setDisplayDateTime() {
 
         this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
             day: "2-digit",
-            month: "short",
+            month: "long",
             year: "numeric"
         });
         this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
@@ -150,35 +200,51 @@ class CalcController {
     }
 
     get displayTime() {
+
         return this._timeEl.innerHTML;
+
     }
 
     set displayTime(value) {
+
         return this._timeEl.innerHTML = value;
+
     }
 
     get displayDate() {
+
         return this._dateEl.innerHTML;
+
     }
 
-
     set displayDate(value) {
+
         return this._dateEl.innerHTML = value;
+
     }
 
     get displayCalc() {
+
         return this._displayCalcEl.innerHTML;
+
     }
+
     set displayCalc(value) {
+
         this._displayCalcEl.innerHTML = value;
+
     }
 
     get currentDate() {
+
         return new Date();
+
     }
 
     set currentDate(value) {
-        this.currentDate = value;
+
+        this._currentDate = value;
+
     }
 
 }
