@@ -65,7 +65,8 @@ class CalcController {
 
     }
 
-    pushOperator(value) {
+    pushOperation(value) {
+
         this._operation.push(value);
 
         if (this._operation.length > 3) {
@@ -73,10 +74,10 @@ class CalcController {
             this.calc();
 
         }
+
     }
 
     calc() {
-
 
         let last = this._operation.pop();
 
@@ -84,10 +85,29 @@ class CalcController {
 
         this._operation = [result, last];
 
-
+        this.setLastNumberToDisplay();
 
     }
 
+    setLastNumberToDisplay() {
+
+        let lastNumber;
+
+        for (let i = this._operation.length - 1; i >= 0; i--) {
+
+            if (!this.isOperator(this._operation[i])) {
+
+                lastNumber = this._operation[i];
+
+                break;
+
+            }
+
+        }
+
+        this.displayCalc = lastNumber;
+
+    }
 
     addOperation(value) {
 
@@ -100,12 +120,13 @@ class CalcController {
 
             } else if (isNaN(value)) {
 
-
-                console.log('outra coisa', value);
+                console.log("outra coisa", value);
 
             } else {
 
-                this.pushOperator(value);
+                this.pushOperation(value);
+
+                this.setLastNumberToDisplay();
 
             }
 
@@ -113,7 +134,7 @@ class CalcController {
 
             if (this.isOperator(value)) {
 
-                this.pushOperator(value);
+                this.pushOperation(value);
 
             } else {
 
@@ -121,12 +142,11 @@ class CalcController {
 
                 this.setLastOperation(parseInt(newValue));
 
+                this.setLastNumberToDisplay();
+
             }
 
-
-
         }
-
 
     }
 
